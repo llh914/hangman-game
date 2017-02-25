@@ -1,30 +1,97 @@
 
-var wins = 0;
-		var words = [
-			"BATMAN",
-			"SUPERGIRL",
-			"SPIDER-MAN",
-			"SUPERMAN",
-			"HULK",
-			"THOR",
-			"DAREDEVIL",
-			"AQUAMAN",
-			"ANT-MAN",
-			"GREEN ARROW",
-			"THE FLASH",
-			"JESSICA JONES",
-			"CAPTAIN AMERICA",
-			"BLACK WIDOW",
-			"IRON MAN",
-			"LUKE CAGE",
-			"BLACK PANTHER",
-			"DOCTOR STRANGE",
-			"BLACK CANARY",
-			"GREEN LANTERN",
-			"WONDER WOMAN",
-			"MARTIAN MANHUNTER"
-		];
+var HEROES = {
+	"GREEN ARROW": {
+		image:"assets/images/arrow.jpg",
+		music: "assets/music/arrow.mp3"
+	},
+	"BATMAN": {
+		image:"assets/images/batman.jpg",
+		music: "assets/music/batman.mp3"
+	},
+	"SUPERGIRL": {
+		image: "assets/images/supergirl.jpg",
+		music: "assets/music/supergirl.mp3",
+	},
+	"SPIDER-MAN": {
+		image: "assets/images/spider.jpeg",
+		music: "assets/music/spider.mp3",
+	},
+	"SUPERMAN": {
+		image: "assets/images/superman.jpg",
+		music: "assets/music/superman.mp3",
+	},
+	"HULK": {
+		image: "assets/images/hulk.jpg",
+		music: "assets/music/hulk.mp3",
+	},
+	"THOR": {
+		image: "assets/images/thor.jpg",
+		music: "assets/music/thor.mp3",
+	},
+	"DAREDEVIL": {
+		image: "assets/images/daredevil.jpg",
+		music: "assets/music/daredevil.mp3",
+	},
+	"AQUAMAN": {
+		image: "assets/images/aquaman.jpg",
+		music: "assets/music/aquaman.mp3",
+	},
+	"ANT-MAN": {
+		image: "assets/images/antman.jpg",
+		music: "assets/music/antman.mp3",
+	},
+	"THE FLASH": {
+		image: "assets/images/flash.jpg",
+		music: "assets/music/flash.mp3",
+	},
+	"JESSICA JONES": {
+		image: "assets/images/jessica.jpeg",
+		music: "assets/music/jessica.mp3",
+	},
+	"CAPTAIN AMERICA": {
+		image: "assets/images/captain.jpeg",
+		music: "assets/music/captain.mp3",
+	},
+	"BLACK WIDOW": {
+		image: "assets/images/widow.jpg",
+		music: "assets/music/widow.mp3",
+	},
+	"IRON MAN": {
+		image:"assets/images/ironman.jpg",
+		music: "assets/music/ironman.mp3"
+	},
+	"LUKE CAGE": {
+		image: "assets/images/luke.jpeg",
+		music: "assets/music/luke.mp3",
+	},
+	"BLACK PANTHER": {
+		image: "assets/images/panther.jpeg",
+		music: "assets/music/panther.mp3",
+	},
+	"DOCTOR STRANGE": {
+		image: "assets/images/strange.jpg",
+		music: "assets/music/strange.mp3",
+	},
+	"BLACK CANARY": {
+		image: "assets/images/canary.jpeg",
+		music: "assets/music/canary.mp3",
+	},
+	"GREEN LANTERN": {
+		image: "assets/images/lantern.jpeg",
+		music: "assets/music/lantern.mp3",
+	},
+	"WONDER WOMAN": {
+		image: "assets/images/wonder.jpeg",
+		music: "assets/music/wonder.mp3",
+	},
+	"MARTIAN MANHUNTER": {
+		image: "assets/images/martian.jpg"
+		music: "assets/music/martian.mp3",
+	}
+}
 
+var wins = 0;
+		var words = Object.keys(HEROES);
 		var currentWord;
 		var currentWordArray;
 		var guessedLetters;
@@ -40,16 +107,16 @@ var wins = 0;
 				
 			for (var i = 0; i < currentWordArray.length; i++){
 				if (currentWordArray[i] === " "){
-					wordBlanks.push(" ")
+					wordBlanks.push("&nbsp;&nbsp;")
 				} else{
 				wordBlanks.push("_ ");
 				}
 			}
 
 			var wordBlanksAsString = wordBlanks.join(" ");
-			document.getElementById("currentWord").textContent = wordBlanksAsString;
-			document.getElementById("guessedLetters").textContent = '';
-			document.getElementById("remainingGuesses").textContent = remainingGuesses;
+			document.getElementById("currentWord").innerHTML = wordBlanksAsString;
+			document.getElementById("guessedLetters").innerHTML = '';
+			document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
 		}
 
 		start();
@@ -60,10 +127,10 @@ var wins = 0;
 			if (index === -1) {
 				guessedLetters.push(userSelection)
 				var guessedLettersAsString = guessedLetters.join(', ');
-				document.getElementById("guessedLetters").textContent = guessedLettersAsString;
+				document.getElementById("guessedLetters").innerHTML = guessedLettersAsString;
 				
 				remainingGuesses--;
-				document.getElementById("remainingGuesses").textContent = remainingGuesses;
+				document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
 
 				for (var i = 0; i < wordBlanks.length; i++){
 					if (currentWordArray[i] === userSelection){
@@ -72,84 +139,19 @@ var wins = 0;
 				}
 
 				var wordBlanksAsString = wordBlanks.join("");
-				document.getElementById("currentWord").textContent = wordBlanksAsString;
+				document.getElementById("currentWord").innerHTML = wordBlanksAsString;
 
-				if (wordBlanksAsString === currentWord) {
+				if (wordBlanksAsString.replace('&nbsp;&nbsp;', ' ') === currentWord) {
+					document.getElementById("image").src = HEROES[currentWord].image;
+					var music = document.getElementById("music");
+					music.src = HEROES[currentWord].music;
+					music.load();
 					wins++;
-					document.getElementById("completedWord").textContent = currentWord;
+					document.getElementById("completedWord").innerHTML = currentWord;
 					start();
 				}
 
-				if (wordBlanksAsString === "GREEN ARROW") {
-					document.getElementById("image").src = "assets/images/arrow.jpg"
-
-				}else if (wordBlanksAsString ==="THE FLASH") {
-					document.getElementById("image").src = "assets/images/flash.jpg"
-
-				}
-				else if (wordBlanksAsString ==="BATMAN") {
-					document.getElementById("image").src = "assets/images/batman.jpg"
-
-				}else if (wordBlanksAsString ==="SUPERGIRL") {
-					document.getElementById("image").src = "assets/images/supergirl.jpg"
-
-				}else if (wordBlanksAsString ==="SPIDER-MAN") {
-					document.getElementById("image").src = "assets/images/spider.jpeg"
-
-				}else if (wordBlanksAsString ==="SUPERMAN") {
-					document.getElementById("image").src = "assets/images/superman.jpg"
-
-				}else if (wordBlanksAsString ==="HULK") {
-					document.getElementById("image").src = "assets/images/hulk.jpg"
-
-				}else if (wordBlanksAsString ==="THOR") {
-					document.getElementById("image").src = "assets/images/thor.jpg"
-
-				}else if (wordBlanksAsString ==="DAREDEVIL") {
-					document.getElementById("image").src = "assets/images/daredevil.jpg"
-
-				}else if (wordBlanksAsString ==="AQUAMAN") {
-					document.getElementById("image").src = "assets/images/aquaman.jpg"
-
-				}else if (wordBlanksAsString ==="ANT-MAN") {
-					document.getElementById("image").src = "assets/images/antman.jpg"
-
-				}else if (wordBlanksAsString ==="JESSICA JONES") {
-					document.getElementById("image").src = "assets/images/jessica.jpeg"
-
-				}else if (wordBlanksAsString ==="CAPTAIN AMERICA") {
-					document.getElementById("image").src = "assets/images/captain.jpeg"
-
-				}else if (wordBlanksAsString ==="BLACK WIDOW") {
-					document.getElementById("image").src = "assets/images/widow.jpg"
-
-				}else if (wordBlanksAsString ==="IRON MAN") {
-					document.getElementById("image").src = "assets/images/ironman.jpg"
-
-				}else if (wordBlanksAsString ==="LUKE CAGE") {
-					document.getElementById("image").src = "assets/images/luke.jpeg"
-
-				}else if (wordBlanksAsString ==="BLACK PANTHER") {
-					document.getElementById("image").src = "assets/images/panther.jpeg"
-
-				}else if (wordBlanksAsString ==="DOCTOR STRANGE") {
-					document.getElementById("image").src = "assets/images/strange.jpg"
-
-				}else if (wordBlanksAsString ==="BLACK CANARY") {
-					document.getElementById("image").src = "assets/images/canary.jpeg"
-
-				}else if (wordBlanksAsString ==="GREEN LANTERN") {
-					document.getElementById("image").src = "assets/images/lantern.jpeg"
-
-				}else if (wordBlanksAsString ==="WONDER WOMAN") {
-					document.getElementById("image").src = "assets/images/wonder.jpeg"
-
-				}else if (wordBlanksAsString ==="MARTIAN MANHUNTER") {
-					document.getElementById("image").src = "assets/images/martian.jpg"
-
-				}
-
-				document.getElementById("score").textContent = wins;
+				document.getElementById("score").innerHTML = wins;
 
 				if (remainingGuesses === 0) {
 					start();

@@ -85,8 +85,8 @@ var HEROES = {
 		music: "assets/music/wonder.mp3",
 	},
 	"MARTIAN MANHUNTER": {
-		image: "assets/images/martian.jpg"
-		music: "assets/music/martian.mp3",
+		image: "assets/images/martian.jpg",
+		music: "assets/music/martian.mp3"
 	}
 }
 

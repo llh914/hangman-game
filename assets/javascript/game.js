@@ -1,5 +1,5 @@
-
-var HEROES = {
+//Object containing all of the heroes
+var heroes = {
 	"GREEN ARROW": {
 		image:"assets/images/arrow.jpg",
 		music: "assets/music/arrow.mp3"
@@ -90,73 +90,87 @@ var HEROES = {
 	}
 }
 
-		var wins = 0;
-		var words = Object.keys(HEROES);
-		var currentWord;
-		var currentWordArray;
-		var guessedLetters;
-		var remainingGuesses;
-		var wordBlanks;
-	
-		function start() {
-			currentWord = words[Math.floor(Math.random() * words.length)];
-			currentWordArray = currentWord.split("");
-			 guessedLetters = [];
-			 remainingGuesses = 15;
-			 wordBlanks = [];
-				
-			for (var i = 0; i < currentWordArray.length; i++){
-				if (currentWordArray[i] === " "){
-					wordBlanks.push("&nbsp;&nbsp;")
-				} else{
-				wordBlanks.push("_ ");
-				}
-			}
+//Initial variables
+var wins = 0;
+var words = Object.keys(heroes);
+var currentWord;
+var currentWordArray;
+var guessedLetters;
+var remainingGuesses;
+var wordBlanks;
 
-			var wordBlanksAsString = wordBlanks.join(" ");
-			document.getElementById("currentWord").innerHTML = wordBlanksAsString;
-			document.getElementById("guessedLetters").innerHTML = '';
-			document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
-		}
+// Start function
+function start() {
+    // Choose random hero from object and split by letters
+    currentWord = words[Math.floor(Math.random() * words.length)];
+    currentWordArray = currentWord.split("");
+    guessedLetters = [];
+    remainingGuesses = 15;
+    wordBlanks = [];
 
-		start();
+    // For every letter of selected hero, create a "__"
+    for (var i = 0; i < currentWordArray.length; i++){
+        if (currentWordArray[i] === " "){
+            wordBlanks.push("&nbsp;&nbsp;")
+        } else{
+        wordBlanks.push("_ ");
+        }
+    }
 
-		document.onkeyup = function (event) {
-			var userSelection = event.key.toUpperCase();
-			var index = guessedLetters.indexOf(userSelection)
-			if (index === -1) {
-				guessedLetters.push(userSelection)
-				var guessedLettersAsString = guessedLetters.join(', ');
-				document.getElementById("guessedLetters").innerHTML = guessedLettersAsString;
-				
-				remainingGuesses--;
-				document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
+    // Display the "__"'s
+    var wordBlanksAsString = wordBlanks.join(" ");
+    document.getElementById("currentWord").innerHTML = wordBlanksAsString;
+    document.getElementById("guessedLetters").innerHTML = '';
+    document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
+}
 
-				for (var i = 0; i < wordBlanks.length; i++){
-					if (currentWordArray[i] === userSelection){
-						wordBlanks[i] = userSelection;
-					} 
-				}
+start();
 
-				var wordBlanksAsString = wordBlanks.join("");
-				document.getElementById("currentWord").innerHTML = wordBlanksAsString;
+// Function for when user presses a key to guess a letter
+document.onkeyup = function (event) {
+    var userSelection = event.key.toUpperCase();
+    var index = guessedLetters.indexOf(userSelection)
 
-				if (wordBlanksAsString.replace('&nbsp;&nbsp;', ' ') === currentWord) {
-					document.getElementById("image").src = HEROES[currentWord].image;
-					var music = document.getElementById("music");
-					music.src = HEROES[currentWord].music;
-					music.load();
-					wins++;
-					document.getElementById("completedWord").innerHTML = currentWord;
-					start();
-				}
+    // Handling when user guesses a letter
+    if (index === -1) {
+        guessedLetters.push(userSelection)
+        var guessedLettersAsString = guessedLetters.join(', ');
+        document.getElementById("guessedLetters").innerHTML = guessedLettersAsString;
 
-				document.getElementById("score").innerHTML = wins;
+        //Update remaining guesses
+        remainingGuesses--;
+        document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
 
-				if (remainingGuesses === 0) {
-					start();
-				}
-			}
+        //Check to see if user's guessed letter is in the superhero's name
+        for (var i = 0; i < wordBlanks.length; i++){
+            // If the letter is in the name, replace the appropriate "__"'s
+            if (currentWordArray[i] === userSelection){
+                wordBlanks[i] = userSelection;
+            }
+        }
 
-		}
+        var wordBlanksAsString = wordBlanks.join("");
+        document.getElementById("currentWord").innerHTML = wordBlanksAsString;
+
+        //Handle if the user guesses superhero's name correctly
+        if (wordBlanksAsString.replace('&nbsp;&nbsp;', ' ') === currentWord) {
+            document.getElementById("image").src = heroes[currentWord].image;
+            var music = document.getElementById("music");
+            music.src = heroes[currentWord].music;
+            music.load();
+            wins++;
+            document.getElementById("completedWord").innerHTML = currentWord;
+            start();
+        }
+
+        // Update score for correct superhero name guess
+        document.getElementById("score").innerHTML = wins;
+
+        // If out of guesses then move to the next hero
+        if (remainingGuesses === 0) {
+            start();
+        }
+    }
+
+}
 			

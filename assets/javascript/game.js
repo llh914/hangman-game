@@ -90,7 +90,7 @@ var HEROES = {
 	}
 }
 
-var wins = 0;
+		var wins = 0;
 		var words = Object.keys(HEROES);
 		var currentWord;
 		var currentWordArray;

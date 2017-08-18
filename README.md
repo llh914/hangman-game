@@ -1,7 +1,7 @@
 # Superhero Hangman
 
 ## Overview
-A superhero hangman game.
+A superhero-themed hangman game
 
 ## How It Works
 - Users guess letters by typing them on their keyboard; maximum of 15 guesses

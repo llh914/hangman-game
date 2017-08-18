@@ -3,6 +3,8 @@
 ## Overview
 A superhero-themed hangman game
 
+![Website](https://github.com/llh914/hangman-game/blob/master/assets/images/hangman.png)
+
 ## How It Works
 - Users guess letters by typing them on their keyboard; maximum of 15 guesses
 - Correct letters will replace the blanks
